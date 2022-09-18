@@ -1,0 +1,13 @@
+{
+  "name": "parser-json",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "ts-node test/indexTest.ts"
+  },
+  "dependencies": {
+    "typescript": "^4.8.3",
+    "ts-node": "^10.9.1"
+  }
+}
