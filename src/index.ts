@@ -77,7 +77,7 @@ function parserJSON(str: string) {
         const token: string = currentToken();
         //指针下移，一口吃掉
         if (token === Operator.COLON) {
-            currentToken();
+            nextToken();
         }
     }
     //下一个token
