@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "ts-node test/indexTest.ts"
+    "test": "ts-node test/indexTest.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "typescript": "^4.8.3",

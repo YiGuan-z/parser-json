@@ -1,10 +1,10 @@
 import {Operator} from "./type";
 
-function parserJSON(str: string) {
+function parserJSON(str: string):any {
     let i = 0;
     let max = str.length;
-    let map: { key: string; value: string; }[] = [];
-    function parseObject() {
+    const result: any = {}
+    function parseObject(): any {
         //如果当前token是BOF 就可以跳过BOF再跳过空格
         if (currentToken() === Operator.BOF) {
             nextToken()
@@ -17,15 +17,14 @@ function parserJSON(str: string) {
                 eatColon();
                 const value = parseValue();
                 // console.log(`key=${key} value=${value}`);
-                map.push({key, value})
-                print()
+                result[key] = value;
             }
+            return result;
         }
     }
     const isToken = (token: any): token is Operator => {
         return Object.values(Operator).includes(token);
     }
-    parseObject();
     //跳过空格
     function skipWhitespace(): void {
         //如果当前token是空格
@@ -91,8 +90,9 @@ function parserJSON(str: string) {
     function hasNextToken(): boolean {
         return i < max;
     }
-    function print(): void  {
-        console.log(map)
+    function print(): void {
+        console.log(result)
     }
+    return parseObject();
 }
 export default parserJSON
