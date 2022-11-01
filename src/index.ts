@@ -1,11 +1,11 @@
-import { Operator, Token } from "./type";
+import {Operator, ParseObject, Token} from "./type";
 import { isToken, ParseTokenError } from "./utils";
 
 export function parserJSON(str: string): any {
     let i: number = 0;
     const max: number = str.length;
     function parseObject(): any {
-        const result: any = {};
+        const result:ParseObject = {};
         //如果当前token是BOF 就可以跳过BOF再跳过空格，这里是梦开始的地方
         if (currentToken() === Operator.BOF) {
             nextToken();

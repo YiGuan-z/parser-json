@@ -17,3 +17,6 @@ export enum Operator {
     ARRAYEOF = ']',
 }
 export type Token = string | null;
+export type ParseObject={
+    [index:string]:any
+}
