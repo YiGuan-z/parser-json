@@ -5,3 +5,7 @@ export const isToken = (token: any): token is Operator => {
 }
 export class ParseTokenError extends Error {
 }
+export default {
+    isToken,
+    ParseTokenError
+}

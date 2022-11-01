@@ -1,11 +1,11 @@
-import {Operator, Token} from "./type";
-import {isToken, ParseTokenError} from "./utils";
+import { Operator, Token } from "./type";
+import { isToken, ParseTokenError } from "./utils";
 
 export function parserJSON(str: string): any {
-    let i = 0;
-    let max = str.length;
-    const result: any = {};
+    let i: number = 0;
+    const max: number = str.length;
     function parseObject(): any {
+        const result: any = {};
         //如果当前token是BOF 就可以跳过BOF再跳过空格，这里是梦开始的地方
         if (currentToken() === Operator.BOF) {
             nextToken();
@@ -34,14 +34,22 @@ export function parserJSON(str: string): any {
                 }
                 //写入数据
                 result[key] = value;
+                //吃掉逗号
+                // eatDelmiter()
                 //打印过程
-                print()
+                console.log(result)
             }
             //解析完成返回数据
             return result;
         } else {
             throw new ParseTokenError('不是一个标准的JSON结构');
         }
+    }
+    function run(): any {
+        if (currentToken() === Operator.BOF) {
+            parseObject()
+        }
+
     }
     /**
      * 吃掉空格
@@ -84,23 +92,7 @@ export function parserJSON(str: string): any {
         }
     }
     function parseKey(): Token {
-        // let key: string = '';
-        // let j: number = 0;
-        // for (let token: string = ''; ; token = nextToken()) {
-        //     if (isToken(token)) {
-        //         switch (token) {
-        //             case Operator.MARK:
-        //                 j++;
-        //                 if (j === 2) return key;
-        //                 break;
-        //             default:
-        //                 break
-        //         }
-        //     } else {
-        //         key += token;
-        //     }
-        // }
-        const key = parseString();
+        const key:string = parseString();
         return key.trim().length > 0 ? key : null;
     }
     /**
@@ -108,23 +100,7 @@ export function parserJSON(str: string): any {
      * 原理同上
      */
     function parseValue(): Token {
-        // let value: string = '';
-        // let j: number = 0;
-        // for (let token: string = ''; ; token = nextToken()) {
-        //     if (isToken(token)) {
-        //         switch (token) {
-        //             case Operator.MARK:
-        //                 j++;
-        //                 if (j === 2) return value;
-        //                 break;
-        //             default:
-        //                 break;
-        //         }
-        //     } else {
-        //         value += token;
-        //     }
-        // }
-        const value = parseString();
+        const value:string = parseString();
         return value.trim().length > 0 ? value : null;
     }
     /**
@@ -136,6 +112,21 @@ export function parserJSON(str: string): any {
         //指针下移，一口吃掉
         if (token === Operator.COLON) {
             nextToken();
+        } else {
+            const errMsg: string = `预期为:当前为${token}`
+            throw new ParseTokenError(errMsg);
+        }
+    }
+    /**
+     * 吃掉 ，
+     */
+    function eatDelmiter() {
+        const token = currentToken();
+        if (token == Operator.DELIMITER) {
+            nextToken()
+        } else {
+            const errMsg: string = `预期为,当前为${token}`
+            throw new ParseTokenError(errMsg);
         }
     }
     /**
@@ -154,8 +145,7 @@ export function parserJSON(str: string): any {
     function hasNextToken(): boolean {
         return i < max;
     }
-    function print(): void {
-        console.log(result)
-    }
     return parseObject();
 }
+const str:string='{"name": "Tom","Grade":"1", "age":"11", "gender": "M"}'
+parserJSON(str)

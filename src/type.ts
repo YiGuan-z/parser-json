@@ -14,6 +14,6 @@ export enum Operator {
     // [
     ARRAYBOF = '[',
     // ]
-    ARRAYEOF = ']'
+    ARRAYEOF = ']',
 }
-export type Token=string|null;
+export type Token = string | null;
